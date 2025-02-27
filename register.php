@@ -1,5 +1,7 @@
 <?php
 require_once('auth.php');
+require_once('middleware/auth_middleware.php');
+AuthMiddleware::check();
 
 $auth = new Auth();
 $message = "";
