@@ -117,9 +117,9 @@ INSERT INTO role_permission (role_id, permission_id) VALUES
 
 -- Inserción de usuarios
 INSERT INTO user (username, password) VALUES
-    ('admin', 'hashed_password_1'),
-    ('seller', 'hashed_password_2'),
-    ('customer', 'hashed_password_3');
+    ('admin', '$2y$12$EDrLQHs6jmq9K6tU4Rjra.rC8LAEglzzZ7.6alAgfg1Dh7csz9q5a'),
+    ('seller', '$2y$12$EDrLQHs6jmq9K6tU4Rjra.rC8LAEglzzZ7.6alAgfg1Dh7csz9q5a'),
+    ('customer', '$2y$12$EDrLQHs6jmq9K6tU4Rjra.rC8LAEglzzZ7.6alAgfg1Dh7csz9q5a');
 
 -- Asignación de roles a usuarios
 INSERT INTO user_role (user_id, role_id) VALUES
