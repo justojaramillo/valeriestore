@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "store";
+    private $db_name = "valerie_store";
     private $username = "root";
     private $password = "";
     private $pdo;

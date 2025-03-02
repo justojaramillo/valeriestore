@@ -1,10 +1,10 @@
 -- Creación de la base de datos
-CREATE DATABASE IF NOT EXISTS online_store;
-USE online_store;
+CREATE DATABASE IF NOT EXISTS valerie_store;
+USE valerie_store;
 
 -- Tabla de usuario
 CREATE TABLE user (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -12,14 +12,14 @@ CREATE TABLE user (
 
 -- Tabla de rol
 CREATE TABLE role (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla de permiso
 CREATE TABLE permission (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    permission_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -27,60 +27,60 @@ CREATE TABLE permission (
 
 -- Relación entre roles y permisos
 CREATE TABLE role_permission (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_permission_id INT AUTO_INCREMENT PRIMARY KEY,
     role_id INT,
     permission_id INT,
-    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
-    FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE
+    FOREIGN KEY (role_id) REFERENCES role(role_id) ON DELETE CASCADE,
+    FOREIGN KEY (permission_id) REFERENCES permission(permission_id) ON DELETE CASCADE
 );
 
 -- Relación entre usuarios y roles
 CREATE TABLE user_role (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_role_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     role_id INT,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES role(role_id) ON DELETE CASCADE
 );
 
 -- Tabla de categoría de producto
 CREATE TABLE category (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL,
     description TEXT
 );
 
 -- Tabla de producto
 CREATE TABLE product (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     price DECIMAL(10,2) NOT NULL,
     stock INT NOT NULL,
     category_id INT,
     image VARCHAR(255),
-    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE SET NULL
+    FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE SET NULL
 );
 
 -- Tabla de pedido
 CREATE TABLE order_table (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_table_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     total_price DECIMAL(10,2) NOT NULL,
     status ENUM('pending', 'completed', 'canceled') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
 -- Tabla de detalle del pedido
 CREATE TABLE order_detail (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
     quantity INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES order_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES order_table(order_table_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
 );
 
 -- Inserción de roles

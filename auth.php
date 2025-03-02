@@ -9,14 +9,14 @@ class Auth {
     }
 
     public function login($username, $password) {
-        $query = "SELECT id, username, password FROM user WHERE username = :username";
+        $query = "SELECT user_id, username, password FROM user WHERE username = :username";
         $result = $this->db->query($query, ['username' => $username]);
 
         if (!empty($result)) {
             $user = $result[0];
             if (password_verify($password, $user['password'])) {
                 session_start();
-                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
                 return true;
             }
@@ -26,7 +26,7 @@ class Auth {
 
     public function register($username, $password) {
         // Verificar si el usuario ya existe
-        $query = "SELECT id FROM user WHERE username = :username";
+        $query = "SELECT user_id FROM user WHERE username = :username";
         $result = $this->db->query($query, ['username' => $username]);
     
         if (!empty($result)) {
@@ -48,7 +48,7 @@ class Auth {
     }
     
 
-    public function isAuthenticated() {
+    public function getAuthenticatedUserId() {
         session_start();
         return isset($_SESSION['user_id']);
     }
